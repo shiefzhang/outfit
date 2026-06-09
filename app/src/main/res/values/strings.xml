@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">穿搭AI助手</string>
+    <string name="tab_evaluate">穿搭评分</string>
+    <string name="tab_scene">场景建议</string>
+    <string name="tab_detail">配饰建议</string>
+    <string name="settings">设置</string>
+    <string name="api_key_label">智谱 API Key</string>
+    <string name="api_key_hint">请输入您的智谱 API Key</string>
+    <string name="save">保存</string>
+    <string name="take_photo">拍照</string>
+    <string name="select_photo">从相册选择</string>
+    <string name="analyzing">AI分析中，请稍候…</string>
+    <string name="result_placeholder">点击拍照或选择图片，AI将为您的穿搭打分</string>
+    <string name="scene_hint">请描述您的场景需求，如：明天参加商务会议</string>
+    <string name="get_suggestion">获取建议</string>
+    <string name="detail_result_placeholder">拍一张现在的穿搭照，AI为您推荐配套的首饰、鞋子和发型</string>
+    <string name="no_api_key">请先在设置中配置智谱 API Key</string>
+    <string name="error_prefix">请求失败：</string>
+    <string name="permission_denied">需要相机权限才能拍照</string>
+    <string name="api_key_saved">API Key 已保存</string>
+    <string name="api_key_empty">API Key 不能为空</string>
+    <string name="scene_empty">请先填写场景需求</string>
+    <string name="photo_required">请先选择或拍摄穿搭照片</string>
+    <string name="go_to_settings">前往设置</string>
+    <string name="register_tip">还没有 API Key？前往智谱开放平台注册</string>
+    <string name="zhipu_url">https://open.bigmodel.cn</string>
+    <string name="open_browser">前往注册</string>
+    <string name="key_status_configured">API Key 已配置</string>
+    <string name="key_status_not_configured">未配置 API Key</string>
+    <string name="key_action_configure">去配置</string>
+    <string name="key_action_edit">编辑</string>
+    <string name="key_copied">📋 API Key 已复制到剪贴板</string>
+    <string name="key_deleted">🗑 API Key 已删除</string>
+    <string name="delete_key_confirm_title">确认删除</string>
+    <string name="delete_key_confirm_msg">确定要删除已保存的 API Key 吗？删除后需要重新配置才能使用 AI 功能。</string>
+</resources>

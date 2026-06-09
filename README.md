@@ -1,0 +1,195 @@
+# 穿搭AI助手 (OutfitAI)
+
+<div align="center">
+
+一款基于**智谱视觉大模型**的安卓 AI 穿搭助手应用，帮你科学搭配，穿出自信。
+
+[![Android](https://img.shields.io/badge/Android-8.0%2B-brightgreen)]()
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.9%2B-orange)]()
+[![License](https://img.shields.io/badge/License-MIT-blue)]()
+
+</div>
+
+---
+
+## 📱 效果预览
+
+| 首页 | 穿搭评分 | 场景建议 | 配饰建议 |
+|------|---------|---------|---------|
+| 底部三Tab导航：拍照评估、场景建议、配饰建议 | 拍照/AI评分、5维分析、改进建议 | 输入场景+选风格→两套完整方案 | 分析穿搭→首饰+鞋+发型推荐 |
+
+---
+
+## ✨ 核心功能
+
+### 🎯 功能一：穿搭评分
+- **拍照评估**：拍摄或从相册选择当前穿搭照片
+- **AI 五维分析**：从**色彩搭配、风格统一性、单品品质感、场合适配度、创意个性** 5 个维度给出定量评分（满分 100）
+- **亮点与改进**：提供亮点分析、改进建议和风格标签
+- **Markdown 渲染**：美观清晰展示分析结果
+
+### 🌟 功能二：场景穿搭建议
+- **场景输入**：自由输入场景，如"明天参加公司年会""周末去郊游"
+- **风格偏好**：可选休闲、正式商务、甜美可爱、酷帅街头、优雅简约、运动活力
+- **完整方案**：AI 给出两套完整穿搭方案，涵盖上装、下装、外套、鞋子、包包、首饰、发型
+- **搭配逻辑**：附赠搭配逻辑说明和加分小贴士
+
+### 💎 功能三：配饰建议
+- **拍照分析**：拍摄当前穿搭照片
+- **三大类建议**：
+  - **首饰**：耳环、项链、手链/手表、戒指推荐
+  - **鞋子**：第一推荐、备选方案、避雷建议
+  - **发型**：首选与备选发型、妆容建议
+- **卡片式展示**：三类建议分卡片独立展示，清晰直观
+
+### ⚙️ 设置页面
+- **API Key 管理**：保存、脱敏显示、复制、删除
+- **模型选择**：支持切换视觉模型（免费/付费），免费模型标注 🆓
+- **返回导航**：顶部导航栏，支持返回
+
+---
+
+## 🧠 AI 模型
+
+### 模型选择
+
+应用支持在设置页面自由切换视觉模型：
+
+| 模型 | 类型 | 说明 |
+|------|------|------|
+| **GLM-4.6V-Flash** | 🆓 免费（默认） | 速度快，适合日常穿搭分析 |
+| **GLM-4.6V-FlashX** | 💰 付费 | 轻量高速版，响应快 |
+| **GLM-4.6V** | 💰 付费 | 高性能版，图像理解能力更强 |
+| **GLM-5V-Turbo** | 💰 付费 | 最新旗舰视觉模型，效果最佳 |
+
+- **功能一/功能三**（含图片）：使用选择的视觉模型
+- **功能二**（纯文本）：使用 `glm-4-flash`（免费）
+
+> 💡 免费模型即可满足日常穿搭分析需求，付费模型提供更高精度。
+
+---
+
+## 🏗️ 项目结构
+
+```
+OutfitAI/
+├── app/
+│   ├── build.gradle                          # 应用构建配置
+│   └── src/main/
+│       ├── AndroidManifest.xml
+│       ├── java/com/outfitai/app/
+│       │   ├── MainActivity.kt               # 主界面 + 底部导航
+│       │   ├── PhotoHelper.kt                # 拍照/相册工具
+│       │   ├── api/
+│       │   │   ├── ZhipuApiService.kt        # 智谱 API 封装（视觉/文本）
+│       │   │   ├── Prompts.kt                # 所有 Prompt 模板
+│       │   │   └── ApiKeyManager.kt          # API Key + 模型选择存储
+│       │   └── ui/
+│       │       ├── evaluate/EvaluateFragment.kt   # 功能一：穿搭评分
+│       │       ├── scene/SceneFragment.kt          # 功能二：场景建议
+│       │       ├── detail/DetailFragment.kt        # 功能三：配饰建议
+│       │       └── settings/SettingsActivity.kt   # 设置页
+│       └── res/
+│           ├── layout/                              # 所有布局文件
+│           ├── menu/bottom_nav_menu.xml             # 底部导航菜单
+│           ├── values/                              # 颜色/字符串/主题
+│           └── xml/file_paths.xml                   # FileProvider 配置
+├── build.gradle                             # 项目级构建配置
+├── settings.gradle                          # 项目设置
+└── gradle.properties                        # Gradle 属性
+```
+
+---
+
+## 🚀 快速开始
+
+### 第一步：获取智谱 API Key
+
+1. 访问 [智谱开放平台](https://www.bigmodel.cn/invite?icode=jh%2FYRDISbzHFHr4LKFV91wZ3c5owLmCCcMQXWcJRS8E%3D)（含邀请链接）
+2. 注册/登录账号
+3. 进入「控制台」→「API Keys」
+4. 点击「创建 API Key」，复制 Key
+
+### 第二步：构建安装
+
+#### 方式一：Android Studio（推荐）
+```bash
+1. 用 Android Studio 打开 OutfitAI 文件夹
+2. 等待 Gradle 同步完成
+3. 连接设备或启动模拟器（API 26+）
+4. 点击 Run ▶
+```
+
+#### 方式二：命令行构建
+```bash
+cd OutfitAI
+./gradlew assembleDebug
+# APK 路径：app/build/outputs/apk/debug/app-debug.apk
+```
+
+### 第三步：配置 API Key
+
+1. 打开应用，首页底部菜单进入 **设置**
+2. 粘贴 API Key → 点击「保存」
+3. 可选：在设置页面切换视觉模型
+4. 回到首页即可使用所有功能
+
+---
+
+## 📦 依赖库
+
+| 库 | 版本 | 用途 |
+|---|---|---|
+| CameraX | 1.4.2 | 相机拍照 |
+| OkHttp 4 | 4.12.0 | 网络请求（调用智谱 API）|
+| Gson | 2.10.1 | JSON 序列化/反序列化 |
+| Markwon | 4.6.2 | Markdown 渲染 |
+| Material 3 | 1.11.0 | UI 组件 |
+| Glide | 4.16.0 | 图片加载 |
+| Navigation | 2.7.7 | 底部导航 |
+
+---
+
+## 🔧 技术要点
+
+- **16KB 页面兼容**：已适配 Android 15 的 16KB 页面大小要求
+- **智能图片压缩**：多级渐进压缩（800px + JPEG 质量 75→40），目标 ≤500KB
+- **安全存储**：API Key 仅存于本地 SharedPreferences
+- **生命周期安全**：异步回调检查 Fragment 存活状态，防止闪退
+- **用户友好错误提示**：API 错误自动翻译为中文提示
+
+---
+
+## 🔒 隐私说明
+
+- API Key 仅保存在设备本地，不会上传到任何第三方服务器
+- 图片数据通过 HTTPS 加密直接发送到智谱 API
+- 本应用**不收集**任何用户个人信息
+
+---
+
+## 📋 最低要求
+
+- **Android 8.0 (API 26)** 及以上
+- 需要 **相机权限** 和 **网络权限**
+
+---
+
+## 📄 版本历史
+
+| 版本 | 日期 | 说明 |
+|------|------|------|
+| v1.0.0 | 2025-06 | 初始版本：三大核心功能 + 设置页面 |
+| v1.1.0 | 2025-06 | 模型选择、API Key 显示、16KB 兼容、智能压缩 |
+
+---
+
+## 📬 联系
+
+如有问题或建议，欢迎提交 [Issue](https://github.com/shiefzhang/outfit/issues) 或 Pull Request。
+
+---
+
+<div align="center">
+Made with ❤️
+</div>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_evaluate"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="@string/tab_evaluate" />
+    <item
+        android:id="@+id/navigation_scene"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:title="@string/tab_scene" />
+    <item
+        android:id="@+id/navigation_detail"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="@string/tab_detail" />
+</menu>

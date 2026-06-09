@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5">
+
+    <!-- 顶部导航栏（带返回按钮） -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_settings"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/purple_500"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="设置"
+        app:titleTextColor="@android:color/white" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- 标题 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="⚙️ 智谱 API 设置"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="本应用使用智谱 GLM-4V-Flash 免费大模型，需要您提供个人 API Key"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:lineSpacingMultiplier="1.4"
+            android:layout_marginBottom="24dp" />
+
+        <!-- API Key 状态显示卡片 -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_key_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <View
+                        android:id="@+id/view_status_dot"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="@android:color/darker_gray"
+                        android:layout_marginEnd="10dp" />
+
+                    <TextView
+                        android:id="@+id/tv_key_status"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="未配置 API Key"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#666666" />
+
+                    <TextView
+                        android:id="@+id/tv_key_action"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="配置"
+                        android:textSize="13sp"
+                        android:textColor="#7C4DFF"
+                        android:padding="6dp"
+                        android:background="?attr/selectableItemBackground" />
+                </LinearLayout>
+
+                <!-- 脱敏/完整 Key 显示（支持自动换行） -->
+                <TextView
+                    android:id="@+id/tv_masked_key"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="12sp"
+                    android:textColor="#555555"
+                    android:background="#F0F0F0"
+                    android:padding="10dp"
+                    android:maxLines="3"
+                    android:ellipsize="middle"
+                    android:visibility="gone" />
+
+                <!-- 显示/隐藏完整 Key 切换 -->
+                <TextView
+                    android:id="@+id/btn_toggle_key_visibility"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="👁 显示完整 Key"
+                    android:textSize="12sp"
+                    android:textColor="#7C4DFF"
+                    android:padding="4dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:layout_marginTop="4dp"
+                    android:visibility="gone" />
+
+                <!-- 操作按钮行 -->
+                <LinearLayout
+                    android:id="@+id/layout_key_actions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="end"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/btn_copy_key"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📋 复制"
+                        android:textSize="13sp"
+                        android:textColor="#555555"
+                        android:padding="6dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_marginEnd="12dp" />
+
+                    <TextView
+                        android:id="@+id/btn_delete_key"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🗑 删除"
+                        android:textSize="13sp"
+                        android:textColor="#D32F2F"
+                        android:padding="6dp"
+                        android:background="?attr/selectableItemBackgroundBorderless" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- API Key 输入卡片 -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_key_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="API Key"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:layout_marginBottom="12dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_api_key"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/api_key_hint"
+                    app:endIconMode="password_toggle"
+                    app:passwordToggleEnabled="true"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_api_key"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 保存按钮 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="💾 保存 API Key"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="28dp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- 视觉模型选择卡片 -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_model_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="🤖 视觉识别模型"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="选择用于图片识别的 AI 模型，免费模型标注 🆓"
+                    android:textSize="12sp"
+                    android:textColor="#888888"
+                    android:layout_marginBottom="12dp" />
+
+                <RadioGroup
+                    android:id="@+id/rg_vision_models"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_model_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="12sp"
+                    android:textColor="#555555"
+                    android:background="#F5F5F5"
+                    android:padding="10dp"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 注册说明卡片 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="📋 如何获取 API Key"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:layout_marginBottom="12dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1. 访问智谱开放平台官网\n2. 注册/登录账号\n3. 进入「控制台」→「API Keys」\n4. 创建新的 API Key\n5. 复制并粘贴到上方输入框"
+                    android:textSize="14sp"
+                    android:textColor="#555555"
+                    android:lineSpacingMultiplier="1.7"
+                    android:layout_marginBottom="16dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_open_website"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="🌐 前往官网注册"
+                    android:textSize="14sp"
+                    app:cornerRadius="24dp"
+                    style="@style/Widget.Material3.Button.OutlinedButton" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 使用说明 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ℹ️ 隐私说明"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="• API Key 仅存储在您的设备本地，不会上传到任何第三方服务器\n• 图片数据通过 HTTPS 加密直接发送到智谱 API\n• 本应用不收集任何个人信息"
+                    android:textSize="13sp"
+                    android:textColor="#666666"
+                    android:lineSpacingMultiplier="1.7" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</ScrollView>
+
+</LinearLayout>
