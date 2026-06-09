@@ -190,16 +190,28 @@ class EvaluateFragment : Fragment() {
     }
 
     /**
-     * 将 API 返回的技术错误信息转换为用户友好的提示
+     * 将 API 返回的错误信息格式化为用户友好提示
+     * - 智谱返回的中文错误消息（如 429/1305）已足够友好，直接展示
+     * - 英文技术错误翻译为中文
      */
     private fun formatApiErrorMessage(rawMessage: String): String {
         val lower = rawMessage.lowercase()
         return when {
+            // 中文消息（智谱已友好化）直接展示
+            rawMessage.contains("该模型") ||
+                rawMessage.contains("访问量") ||
+                rawMessage.contains("稍后再试") ||
+                rawMessage.contains("余额") ||
+                rawMessage.contains("额度") -> rawMessage
+
+            // 英文技术错误翻译
             lower.contains("invalid") || lower.contains("unauthorized") || lower.contains("401") -> "API Key 无效或已过期，请检查设置"
-            lower.contains("quota") || lower.contains("rate") || lower.contains("429") -> "API 调用频率超限，请稍后再试"
             lower.contains("timeout") || lower.contains("timed out") -> "请求超时，请检查网络后重试"
-            lower.contains("network") || lower.contains("connect") -> "网络连接失败，请检查网络"
-            else -> "服务异常，请重试"
+            lower.contains("network") || lower.contains("connect") ||
+                lower.contains("failed to connect") -> "网络连接失败，请检查网络"
+
+            // 兜底
+            else -> rawMessage // 直接展示原始消息，避免"服务异常"这种无意义提示
         }
     }
 }

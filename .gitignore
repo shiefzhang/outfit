@@ -10,5 +10,6 @@
 *.apk
 *.aab
 local.properties
+
 app/build/
 app/release/

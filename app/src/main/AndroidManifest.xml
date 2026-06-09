@@ -18,6 +18,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.OutfitAI"
+        android:forceDarkAllowed="false"
         android:usesCleartextTraffic="false">
 
         <activity

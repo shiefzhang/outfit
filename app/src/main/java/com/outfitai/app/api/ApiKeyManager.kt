@@ -14,10 +14,12 @@ object ApiKeyManager {
 
     // 所有可选视觉模型
     val VISION_MODEL_OPTIONS = listOf(
-        VisionModel("glm-4.6v-flash",   "GLM-4.6V-Flash",     true,  "🆓 免费，速度快，适合日常穿搭分析"),
-        VisionModel("glm-4.6v-flashx",  "GLM-4.6V-FlashX",    false, "轻量高速版，响应快，性价比高"),
-        VisionModel("glm-4.6v",         "GLM-4.6V",           false, "高性能版，图像理解能力更强"),
-        VisionModel("glm-5v-turbo",     "GLM-5V-Turbo",       false, "最新旗舰视觉模型，效果最佳"),
+        VisionModel("glm-4.6v-flash",         "GLM-4.6V-Flash",          true,  "🆓 免费，速度快，适合日常穿搭分析"),
+        VisionModel("glm-4v-flash",            "GLM-4V-Flash",            true,  "🆓 免费，经典视觉模型，兼容性好"),
+        VisionModel("glm-4.1v-thinking-flash", "GLM-4.1V-Thinking-Flash", true,  "🆓 免费，支持思考链推理，分析更深入"),
+        VisionModel("glm-4.6v-flashx",         "GLM-4.6V-FlashX",         false, "轻量高速版，响应快，性价比高"),
+        VisionModel("glm-4.6v",                "GLM-4.6V",                false, "高性能版，图像理解能力更强"),
+        VisionModel("glm-5v-turbo",            "GLM-5V-Turbo",            false, "最新旗舰视觉模型，效果最佳"),
     )
 
     data class VisionModel(
