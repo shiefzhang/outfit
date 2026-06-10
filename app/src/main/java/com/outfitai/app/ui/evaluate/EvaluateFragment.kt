@@ -17,6 +17,8 @@ import com.outfitai.app.PhotoHelper
 import com.outfitai.app.api.ApiKeyManager
 import com.outfitai.app.api.Prompts
 import com.outfitai.app.api.ZhipuApiService
+import com.outfitai.app.data.HistoryManager
+import com.outfitai.app.data.OutfitRecord
 import com.outfitai.app.databinding.FragmentEvaluateBinding
 import com.outfitai.app.ui.settings.SettingsActivity
 import io.noties.markwon.Markwon
@@ -28,6 +30,7 @@ class EvaluateFragment : Fragment() {
 
     private var currentBitmap: Bitmap? = null
     private var photoUri: Uri? = null
+    private var currentAiContent: String = ""
     private lateinit var markwon: Markwon
 
     // 相机权限申请
@@ -58,6 +61,7 @@ class EvaluateFragment : Fragment() {
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.data?.let { uri ->
+                photoUri = uri
                 val bitmap = PhotoHelper.loadBitmapFromUri(requireContext(), uri)
                 if (bitmap != null) {
                     setImage(bitmap)
@@ -157,13 +161,35 @@ class EvaluateFragment : Fragment() {
     }
 
     private fun showResult(content: String) {
+        currentAiContent = content
         binding.cardResult.visibility = View.VISIBLE
         markwon.setMarkdown(binding.tvResult, content)
+
+        // 设置保存按钮
+        binding.btnSave.setOnClickListener { saveRecord() }
 
         // 滚动到结果区域
         binding.root.post {
             (binding.root as? android.widget.ScrollView)?.smoothScrollTo(0, binding.cardResult.top)
         }
+    }
+
+    private fun saveRecord() {
+        if (currentAiContent.isBlank()) return
+
+        val permanentPath = if (photoUri != null) HistoryManager.savePhotoPermanent(requireContext(), photoUri!!) else ""
+        val imagePath = if (permanentPath.isNotBlank()) permanentPath else (photoUri?.toString() ?: "")
+        val thumbPath = if (imagePath.isNotBlank()) HistoryManager.saveThumbnail(requireContext(), imagePath) else ""
+        val record = OutfitRecord(
+            type = "evaluate",
+            typeName = "穿搭评分",
+            userInput = "拍照穿搭评分",
+            aiContent = currentAiContent,
+            imagePath = imagePath,
+            thumbPath = thumbPath
+        )
+        HistoryManager.addRecord(requireContext(), record)
+        Toast.makeText(requireContext(), "✅ 已保存到穿搭历史", Toast.LENGTH_SHORT).show()
     }
 
     private fun setLoading(loading: Boolean) {

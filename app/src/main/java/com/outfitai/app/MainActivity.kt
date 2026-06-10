@@ -10,6 +10,7 @@ import com.outfitai.app.api.ApiKeyManager
 import com.outfitai.app.databinding.ActivityMainBinding
 import com.outfitai.app.ui.detail.DetailFragment
 import com.outfitai.app.ui.evaluate.EvaluateFragment
+import com.outfitai.app.ui.history.HistoryFragment
 import com.outfitai.app.ui.scene.SceneFragment
 import com.outfitai.app.ui.settings.SettingsActivity
 
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private val evaluateFragment by lazy { EvaluateFragment() }
     private val sceneFragment by lazy { SceneFragment() }
     private val detailFragment by lazy { DetailFragment() }
+    private val historyFragment by lazy { HistoryFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +51,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_detail -> {
                     loadFragment(detailFragment, "detail")
                     supportActionBar?.title = "配饰建议"
+                    true
+                }
+                R.id.navigation_history -> {
+                    loadFragment(historyFragment, "history")
+                    supportActionBar?.title = "穿搭历史"
                     true
                 }
                 else -> false

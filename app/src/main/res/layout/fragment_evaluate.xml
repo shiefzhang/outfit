@@ -140,6 +140,16 @@
                     android:textColor="#444444"
                     android:lineSpacingMultiplier="1.5"
                     android:text="@string/result_placeholder" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="💾 保存到穿搭历史"
+                    android:textSize="13sp"
+                    app:cornerRadius="20dp"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_marginTop="12dp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

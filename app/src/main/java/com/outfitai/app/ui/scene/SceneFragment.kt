@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import com.outfitai.app.api.ApiKeyManager
 import com.outfitai.app.api.Prompts
 import com.outfitai.app.api.ZhipuApiService
+import com.outfitai.app.data.HistoryManager
+import com.outfitai.app.data.OutfitRecord
 import com.outfitai.app.databinding.FragmentSceneBinding
 import com.outfitai.app.ui.settings.SettingsActivity
 import io.noties.markwon.Markwon
@@ -21,6 +23,8 @@ class SceneFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var markwon: Markwon
+    private var currentAiContent: String = ""
+    private var currentSceneText: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,6 +71,8 @@ class SceneFragment : Fragment() {
         // 隐藏键盘
         hideKeyboard()
 
+        currentSceneText = scene
+
         setLoading(true)
 
         val userMessage = Prompts.buildSceneUserMessage(scene, stylePrefs)
@@ -94,13 +100,39 @@ class SceneFragment : Fragment() {
     }
 
     private fun showResult(content: String) {
+        currentAiContent = content
+
+        // 将 "场景解读" 替换为用户输入的场景文字
+        val sceneText = if (currentSceneText.isNotBlank()) currentSceneText else "场景解读"
+        val modifiedContent = content.replace("## 🌟 场景解读", "## 📝 场景：${sceneText}")
+
         binding.cardResult.visibility = View.VISIBLE
-        markwon.setMarkdown(binding.tvResult, content)
+        markwon.setMarkdown(binding.tvResult, modifiedContent)
+
+        // 设置保存按钮
+        binding.btnSave.setOnClickListener { saveRecord() }
 
         // 滚动到结果
         binding.root.post {
             (binding.root as? android.widget.ScrollView)?.smoothScrollTo(0, binding.cardResult.top)
         }
+    }
+
+    private fun saveRecord() {
+        if (currentAiContent.isBlank()) return
+
+        // 保存时也替换"场景解读"为用户输入的文字
+        val sceneText = if (currentSceneText.isNotBlank()) currentSceneText else "场景解读"
+        val savedContent = currentAiContent.replace("## 🌟 场景解读", "## 📝 场景：${sceneText}")
+
+        val record = OutfitRecord(
+            type = "scene",
+            typeName = "场景建议",
+            userInput = "场景：$currentSceneText",
+            aiContent = savedContent
+        )
+        HistoryManager.addRecord(requireContext(), record)
+        Toast.makeText(requireContext(), "✅ 已保存到穿搭历史", Toast.LENGTH_SHORT).show()
     }
 
     private fun setLoading(loading: Boolean) {

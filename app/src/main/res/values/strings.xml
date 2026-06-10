@@ -3,6 +3,7 @@
     <string name="tab_evaluate">穿搭评分</string>
     <string name="tab_scene">场景建议</string>
     <string name="tab_detail">配饰建议</string>
+    <string name="tab_history">穿搭历史</string>
     <string name="settings">设置</string>
     <string name="api_key_label">智谱 API Key</string>
     <string name="api_key_hint">请输入您的智谱 API Key</string>

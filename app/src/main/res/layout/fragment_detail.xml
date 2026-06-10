@@ -38,7 +38,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="拍下当前穿搭，AI将为您提供具体的首饰、鞋子和发型搭配方案"
+                    android:text="拍下当前穿搭，选择需要建议的配饰分类，AI将为您提供精准搭配方案，支持多选"
                     android:textSize="14sp"
                     android:textColor="#666666"
                     android:lineSpacingMultiplier="1.4" />
@@ -106,6 +106,103 @@
                 style="@style/Widget.Material3.Button.OutlinedButton" />
         </LinearLayout>
 
+        <!-- 选择需要建议的配饰分类（九宫格） -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="16dp"
+            android:id="@+id/card_category_selector">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🎯 选择需要建议的项目（至少选一项）"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:layout_marginBottom="12dp" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group_accessories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_hair"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="💇 发型"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_makeup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="💄 化妆"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_earrings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="💍 耳环"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_bag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="👜 包包"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_ring"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="💍 戒指"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_wrist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⌚ 腕部装饰"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_necklace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📿 项链"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_scarf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🧣 围巾"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_shoes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="👠 鞋子"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <!-- 分析按钮 -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_analyze"
@@ -148,13 +245,14 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <!-- 首饰建议 -->
+            <!-- 结果卡片（使用 Markdown 渲染） -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
-                android:layout_marginBottom="12dp">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -165,85 +263,29 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="💍 首饰搭配"
-                        android:textSize="17sp"
+                        android:text="💎 配饰搭配方案"
+                        android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textColor="#5C6BC0"
-                        android:layout_marginBottom="12dp" />
+                        android:textColor="#333333"
+                        android:layout_marginBottom="16dp" />
 
                     <TextView
-                        android:id="@+id/tv_jewelry"
+                        android:id="@+id/tv_result"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:textSize="15sp"
                         android:textColor="#444444"
-                        android:lineSpacingMultiplier="1.6" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                        android:lineSpacingMultiplier="1.5" />
 
-            <!-- 鞋子建议 -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                android:layout_marginBottom="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="👠 鞋子搭配"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:textColor="#AB47BC"
-                        android:layout_marginBottom="12dp" />
-
-                    <TextView
-                        android:id="@+id/tv_shoes"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_save"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="#444444"
-                        android:lineSpacingMultiplier="1.6" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- 发型建议 -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                android:layout_marginBottom="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="💇 发型建议"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:textColor="#EC407A"
-                        android:layout_marginBottom="12dp" />
-
-                    <TextView
-                        android:id="@+id/tv_hairstyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="#444444"
-                        android:lineSpacingMultiplier="1.6" />
+                        android:layout_height="40dp"
+                        android:text="💾 保存到穿搭历史"
+                        android:textSize="13sp"
+                        app:cornerRadius="20dp"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_marginTop="12dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

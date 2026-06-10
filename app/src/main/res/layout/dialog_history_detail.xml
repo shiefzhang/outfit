@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="4dp">
+
+        <!-- 照片 -->
+        <ImageView
+            android:id="@+id/iv_dialog_photo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:background="#E8E0F0"
+            android:layout_marginBottom="12dp" />
+
+        <!-- AI 内容 -->
+        <TextView
+            android:id="@+id/tv_dialog_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#444444"
+            android:lineSpacingMultiplier="1.5" />
+
+    </LinearLayout>
+</ScrollView>
