@@ -59,14 +59,22 @@ class SceneFragment : Fragment() {
             return
         }
 
-        // 收集选中的风格偏好
+        // 收集选中的风格偏好（遍历所有分组 ChipGroup）
         val stylePrefs = mutableListOf<String>()
-        if (binding.chipCasual.isChecked) stylePrefs.add("休闲")
-        if (binding.chipFormal.isChecked) stylePrefs.add("正式商务")
-        if (binding.chipSweet.isChecked) stylePrefs.add("甜美可爱")
-        if (binding.chipCool.isChecked) stylePrefs.add("酷帅街头")
-        if (binding.chipElegant.isChecked) stylePrefs.add("优雅简约")
-        if (binding.chipSporty.isChecked) stylePrefs.add("运动活力")
+        val chipGroups = listOf(
+            binding.chipGroupDaily,
+            binding.chipGroupGentle,
+            binding.chipGroupWork,
+            binding.chipGroupCool
+        )
+        for (group in chipGroups) {
+            for (i in 0 until group.childCount) {
+                val chip = group.getChildAt(i) as? com.google.android.material.chip.Chip ?: continue
+                if (chip.isChecked) {
+                    stylePrefs.add(chip.text.toString())
+                }
+            }
+        }
 
         // 隐藏键盘
         hideKeyboard()

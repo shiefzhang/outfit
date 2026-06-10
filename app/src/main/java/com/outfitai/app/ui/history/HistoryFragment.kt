@@ -107,10 +107,18 @@ class HistoryFragment : Fragment() {
             .setTitle("${record.typeName} · ${record.formattedTime}")
             .setView(dialogBinding.root)
             .setPositiveButton("关闭", null)
-            .setNeutralButton("🗑 删除") { _, _ ->
-                HistoryManager.deleteRecord(requireContext(), record.id)
-                refreshList()
-                Toast.makeText(requireContext(), "已删除", Toast.LENGTH_SHORT).show()
+            .setNeutralButton("🗑 删除") { dialog, _ ->
+                dialog.dismiss()
+                com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("删除记录")
+                    .setMessage("确定要删除这条「${record.typeName}」记录吗？")
+                    .setPositiveButton("删除") { _, _ ->
+                        HistoryManager.deleteRecord(requireContext(), record.id)
+                        refreshList()
+                        Toast.makeText(requireContext(), "已删除", Toast.LENGTH_SHORT).show()
+                    }
+                    .setNegativeButton("取消", null)
+                    .show()
             }
             .create()
 

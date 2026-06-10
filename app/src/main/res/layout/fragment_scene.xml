@@ -99,53 +99,279 @@
                     android:text="风格偏好（可选）"
                     android:textSize="14sp"
                     android:textColor="#666666"
-                    android:layout_marginBottom="12dp" />
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 日常休闲类 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🌿 日常休闲类"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#444444"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="适用：逛街、出游、居家、通勤休闲"
+                    android:textSize="11sp"
+                    android:textColor="#999999"
+                    android:layout_marginBottom="10dp" />
 
                 <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chip_group_style"
+                    android:id="@+id/chip_group_daily"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_korean_casual"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="韩系休闲"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_american_retro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="美式复古"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_japanese_fresh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="日系清新"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_active_sporty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="活力运动"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_lazy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="慵懒风"
+                        style="@style/Widget.Material3.Chip.Filter" />
+                </com.google.android.material.chip.ChipGroup>
+
+                <!-- 分割线 -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EEEEEE"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 温柔气质类 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🌸 温柔气质类"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#444444"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="适用：约会、下午茶、探店、轻聚会"
+                    android:textSize="11sp"
+                    android:textColor="#999999"
+                    android:layout_marginBottom="10dp" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group_gentle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_french_gentle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="法式温柔"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_pure_desire"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="纯欲风"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_sweet_girl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="甜美少女风"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_warm_chinese"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="温婉国风"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_light_lady"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="轻淑女风"
+                        style="@style/Widget.Material3.Chip.Filter" />
+                </com.google.android.material.chip.ChipGroup>
+
+                <!-- 分割线 -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EEEEEE"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 干练职场 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💼 干练职场"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#444444"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="适用：上班、商务会面、正式场合"
+                    android:textSize="11sp"
+                    android:textColor="#999999"
+                    android:layout_marginBottom="10dp" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group_work"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_minimal_office"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="极简通勤风"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_mature_knowledge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="轻熟知性风"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_office_queen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="职场御姐风"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_academic_office"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="学院通勤风"
+                        style="@style/Widget.Material3.Chip.Filter" />
+                </com.google.android.material.chip.ChipGroup>
+
+                <!-- 分割线 -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EEEEEE"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 酷飒个性类 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🔥 酷飒个性类"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#444444"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="适用：街头、看展、派对、个性出行"
+                    android:textSize="11sp"
+                    android:textColor="#999999"
+                    android:layout_marginBottom="10dp" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group_cool"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_casual"
+                        android:id="@+id/chip_cool_street"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="休闲"
+                        android:text="酷拽街头风"
                         style="@style/Widget.Material3.Chip.Filter" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_formal"
+                        android:id="@+id/chip_salt_cold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="正式商务"
+                        android:text="盐系冷感风"
                         style="@style/Widget.Material3.Chip.Filter" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_sweet"
+                        android:id="@+id/chip_motorcycle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="甜美可爱"
+                        android:text="机车风"
                         style="@style/Widget.Material3.Chip.Filter" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_cool"
+                        android:id="@+id/chip_dark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="酷帅街头"
+                        android:text="暗黑系"
                         style="@style/Widget.Material3.Chip.Filter" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_elegant"
+                        android:id="@+id/chip_workwear"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="优雅简约"
+                        android:text="工装风"
                         style="@style/Widget.Material3.Chip.Filter" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_sporty"
+                        android:id="@+id/chip_baroque"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="运动活力"
+                        android:text="巴洛克复古"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_boho"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="波西米亚风"
+                        style="@style/Widget.Material3.Chip.Filter" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_pastoral"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="田园风"
                         style="@style/Widget.Material3.Chip.Filter" />
                 </com.google.android.material.chip.ChipGroup>
 
