@@ -94,7 +94,7 @@ class HistoryFragment : Fragment() {
             dialogBinding.ivDialogPhoto.visibility = View.VISIBLE
             Glide.with(dialogBinding.ivDialogPhoto.context)
                 .load(record.imagePath)
-                .centerCrop()
+                .fitCenter()
                 .into(dialogBinding.ivDialogPhoto)
         } else {
             dialogBinding.ivDialogPhoto.visibility = View.GONE

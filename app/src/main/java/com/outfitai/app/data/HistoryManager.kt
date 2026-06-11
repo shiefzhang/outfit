@@ -10,6 +10,8 @@ import com.google.gson.reflect.TypeToken
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.net.HttpURLConnection
+import java.net.URL
 
 /**
  * 穿搭记录数据类
@@ -106,6 +108,42 @@ object HistoryManager {
             thumb.recycle()
 
             thumbFile.absolutePath
+        } catch (e: Exception) {
+            ""
+        }
+    }
+
+    /**
+     * 从网络 URL 下载图片并生成 120px 缩略图（适用于 CogView 生成的效果图）
+     * 内部已做全面异常处理，不会抛出任何异常
+     * @return 缩略图文件路径，失败时返回空字符串
+     */
+    fun saveThumbnailFromUrl(context: Context, imageUrl: String): String {
+        return try {
+            if (imageUrl.isBlank()) return ""
+
+            // 1. 下载图片到缓存目录
+            val cacheDir = File(context.cacheDir, "visual_originals")
+            cacheDir.mkdirs()
+            val originFile = File(cacheDir, "visual_${System.currentTimeMillis()}.jpg")
+
+            val url = URL(imageUrl)
+            val connection = url.openConnection() as HttpURLConnection
+            connection.connectTimeout = 15000
+            connection.readTimeout = 30000
+            connection.instanceFollowRedirects = true
+
+            connection.inputStream.use { input ->
+                FileOutputStream(originFile).use { output ->
+                    input.copyTo(output)
+                }
+            }
+            connection.disconnect()
+
+            if (!originFile.exists() || originFile.length() == 0L) return ""
+
+            // 2. 用已有方法生成缩略图
+            saveThumbnail(context, originFile.absolutePath)
         } catch (e: Exception) {
             ""
         }

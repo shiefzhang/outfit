@@ -147,7 +147,9 @@ class SceneFragment : Fragment() {
             userInput = "场景：$currentSceneText",
             aiContent = savedContent,
             imagePath = currentVisualUrl,
-            thumbPath = currentVisualUrl
+            thumbPath = if (currentVisualUrl.isNotBlank()) {
+                HistoryManager.saveThumbnailFromUrl(requireContext(), currentVisualUrl)
+            } else ""
         )
         HistoryManager.addRecord(requireContext(), record)
         Toast.makeText(requireContext(), "✅ 已保存到穿搭历史", Toast.LENGTH_SHORT).show()
