@@ -26,7 +26,7 @@
             android:scaleType="centerCrop"
             android:visibility="gone"
             android:background="#E8E0F0"
-            android:layout_gravity="top" />
+            android:layout_gravity="center_vertical" />
 
         <!-- 右侧文字区域 -->
         <LinearLayout
