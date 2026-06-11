@@ -2,6 +2,7 @@ package com.outfitai.app.ui.scene
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,7 @@ class SceneFragment : Fragment() {
     private lateinit var markwon: Markwon
     private var currentAiContent: String = ""
     private var currentSceneText: String = ""
+    private var currentVisualUrl: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -119,6 +121,12 @@ class SceneFragment : Fragment() {
 
         // 设置保存按钮
         binding.btnSave.setOnClickListener { saveRecord() }
+        // 设置效果图生成按钮
+        binding.btnVisualize.setOnClickListener { generateVisual() }
+        binding.btnVisualize.isEnabled = true
+        binding.btnVisualize.text = "🎨 生成效果图"
+        binding.cardVisual.visibility = View.GONE
+        currentVisualUrl = ""
 
         // 滚动到结果
         binding.root.post {
@@ -137,16 +145,91 @@ class SceneFragment : Fragment() {
             type = "scene",
             typeName = "场景建议",
             userInput = "场景：$currentSceneText",
-            aiContent = savedContent
+            aiContent = savedContent,
+            imagePath = currentVisualUrl,
+            thumbPath = currentVisualUrl
         )
         HistoryManager.addRecord(requireContext(), record)
         Toast.makeText(requireContext(), "✅ 已保存到穿搭历史", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun generateVisual() {
+        val apiKey = ApiKeyManager.getApiKey(requireContext())
+        if (apiKey.isBlank()) {
+            showApiKeyDialog()
+            return
+        }
+
+        val sceneText = if (currentSceneText.isNotBlank()) currentSceneText else "场景解读"
+
+        // 显示加载状态
+        binding.cardVisual.visibility = View.VISIBLE
+        binding.progressVisual.visibility = View.VISIBLE
+        binding.ivVisual.visibility = View.GONE
+        binding.btnVisualize.isEnabled = false
+        binding.btnVisualize.text = "生成中…"
+
+        // Step 1: 用 AI 生成详细的英文图像描述
+        val userPrompt = "以下是一个穿搭场景描述和AI给出的穿搭建议。请基于此生成一段英文图像描述，用于AI绘图工具生成效果图。要求描述人物的整体穿搭风格、服装款式、颜色、配饰等细节。" +
+                "\n\n场景：$sceneText" +
+                "\n\nAI穿搭建议：\n$currentAiContent" +
+                "\n\n请用英文输出，100-200词，包含场景、人物穿搭细节、整体风格、摄影风格描述。"
+
+        ZhipuApiService.chatText(
+            apiKey = apiKey,
+            systemPrompt = "",
+            userText = userPrompt
+        ) { result1 ->
+            if (!isAdded) return@chatText
+
+            result1.onSuccess { imagePrompt ->
+                Log.d("Visualize", "✅ 图像描述生成成功，长度=${imagePrompt.length}")
+
+                // Step 2: 调用 CogView 生成图片
+                ZhipuApiService.generateImage(apiKey, imagePrompt) { result2 ->
+                    if (!isAdded) return@generateImage
+
+                    requireActivity().runOnUiThread {
+                        if (!isAdded) return@runOnUiThread
+
+                        binding.progressVisual.visibility = View.GONE
+                        binding.btnVisualize.isEnabled = true
+                        binding.btnVisualize.text = "🎨 重新生成"
+
+                        result2.onSuccess { imageUrl ->
+                            currentVisualUrl = imageUrl
+                            binding.ivVisual.visibility = View.VISIBLE
+                            com.bumptech.glide.Glide.with(binding.ivVisual.context)
+                                .load(imageUrl)
+                                .placeholder(android.R.color.transparent)
+                                .error(android.R.color.transparent)
+                                .into(binding.ivVisual)
+                        }.onFailure { error ->
+                            val errorMsg = formatApiErrorMessage(error.message ?: "未知错误")
+                            Toast.makeText(requireContext(), "效果图生成失败：$errorMsg", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }.onFailure { error ->
+                requireActivity().runOnUiThread {
+                    if (!isAdded) return@runOnUiThread
+                    binding.progressVisual.visibility = View.GONE
+                    binding.btnVisualize.isEnabled = true
+                    binding.btnVisualize.text = "🎨 生成效果图"
+                    val errorMsg = formatApiErrorMessage(error.message ?: "未知错误")
+                    Toast.makeText(requireContext(), "分析失败：$errorMsg", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
     private fun setLoading(loading: Boolean) {
         binding.layoutLoading.visibility = if (loading) View.VISIBLE else View.GONE
         binding.btnGetSuggestion.isEnabled = !loading
         binding.btnGetSuggestion.text = if (loading) "AI 思考中…" else "✨ 获取穿搭建议"
+        if (loading) {
+            binding.cardVisual.visibility = View.GONE
+        }
     }
 
     private fun hideKeyboard() {

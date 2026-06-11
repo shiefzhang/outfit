@@ -13,8 +13,10 @@
         <ImageView
             android:id="@+id/iv_dialog_photo"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
+            android:layout_height="wrap_content"
+            android:maxHeight="300dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:visibility="gone"
             android:background="#E8E0F0"
             android:layout_marginBottom="12dp" />

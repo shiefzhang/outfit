@@ -19,6 +19,7 @@ object ZhipuApiService {
 
     private const val TAG = "ZhipuAPI"
     private const val BASE_URL = "https://open.bigmodel.cn/api/paas/v4/chat/completions"
+    private const val IMAGE_GEN_URL = "https://open.bigmodel.cn/api/paas/v4/images/generations"
     private const val MODEL_TEXT = "glm-4-flash"        // 纯文本请求使用 Flash
 
     private val gson = Gson()
@@ -53,6 +54,15 @@ object ZhipuApiService {
     data class ApiError(
         val message: String,
         val code: String?
+    )
+
+    // ---------- 图片生成 ----------
+    data class ImageGenResponse(
+        val data: List<ImageData>?,
+        val error: ApiError?
+    )
+    data class ImageData(
+        val url: String?
     )
 
     // ---------- 核心调用 ----------
@@ -117,6 +127,71 @@ object ZhipuApiService {
         )
 
         executeRequest(apiKey, requestBody, callback)
+    }
+
+    /**
+     * 图片生成（CogView）
+     * @param prompt 英文图像描述
+     * @param callback 返回生成的图片 URL
+     */
+    fun generateImage(
+        apiKey: String,
+        prompt: String,
+        callback: (Result<String>) -> Unit
+    ) {
+        val requestBody = mapOf(
+            "model" to "cogview-3-flash",
+            "prompt" to prompt
+        )
+        val jsonBody = gson.toJson(requestBody)
+        val body = jsonBody.toRequestBody("application/json; charset=utf-8".toMediaType())
+
+        Log.d(TAG, ">>> 图片生成 prompt 长度=${prompt.length}")
+
+        val request = Request.Builder()
+            .url(IMAGE_GEN_URL)
+            .addHeader("Authorization", "Bearer $apiKey")
+            .addHeader("Content-Type", "application/json")
+            .post(body)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e(TAG, "❌ 图片生成网络请求失败: ${e.message}")
+                callback(Result.failure(Exception("图片生成请求失败：${e.message}")))
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val responseBody = response.body?.string() ?: ""
+                Log.d(TAG, "<<< 图片生成 HTTP ${response.code}")
+
+                if (!response.isSuccessful) {
+                    try {
+                        val errResp = gson.fromJson(responseBody, Map::class.java)
+                        val err = errResp["error"] as? Map<*, *>
+                        val msg = err?.get("message") as? String ?: "图片生成失败 (${response.code})"
+                        callback(Result.failure(Exception(msg)))
+                    } catch (e: Exception) {
+                        callback(Result.failure(Exception("图片生成失败 (${response.code})")))
+                    }
+                    return
+                }
+
+                try {
+                    val imgResp = gson.fromJson(responseBody, ImageGenResponse::class.java)
+                    val url = imgResp.data?.firstOrNull()?.url
+                    if (url != null) {
+                        Log.d(TAG, "✅ 图片生成成功，URL长度=${url.length}")
+                        callback(Result.success(url))
+                    } else {
+                        callback(Result.failure(Exception("图片生成返回数据为空")))
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "❌ 解析图片生成响应失败: ${e.message}")
+                    callback(Result.failure(Exception("解析图片生成响应失败：${e.message}")))
+                }
+            }
+        })
     }
 
     // ---------- 私有方法 ----------

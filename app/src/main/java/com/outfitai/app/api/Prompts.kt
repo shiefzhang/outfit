@@ -170,4 +170,19 @@ object Prompts {
         val categoriesJoined = selectedCategories.joinToString("、")
         return "请根据我当前的穿搭，只针对以下分类给出具体建议：$categoriesJoined"
     }
+
+    /** 效果图生成：将配饰建议转成英文图像描述 Prompt */
+    val VISUALIZE_PROMPT = """
+Analyze the person's outfit in this photo carefully. Then, based on the accessory recommendations below, write a detailed English prompt for an AI image generator.
+
+The prompt should:
+- Start by briefly describing the current outfit (clothing colors, style, silhouette)
+- Then describe how the recommended accessories would look when added/worn
+- Include specific details: colors, materials, styles, placement
+- Describe the overall look with all accessories combined
+- End with photography style (like "natural lighting, full body shot, high quality, photorealistic")
+- Be 100-200 words, in English
+
+Accessory recommendations:
+""".trimIndent()
 }
