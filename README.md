@@ -2,7 +2,7 @@
 
 <div align="center">
 
-一款基于**智谱视觉大模型**的安卓 AI 穿搭助手应用，帮你科学搭配，穿出自信。**v1.1.0 已适配 Android 15 16KB 页面大小。**
+一款基于**智谱视觉大模型**的安卓 AI 穿搭助手应用，帮你科学搭配，穿出自信。**v1.2.3 已优化应用图标资源并补充隐私政策。**
 
 [![Android](https://img.shields.io/badge/Android-8.0%2B-brightgreen)]()
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.9%2B-orange)]()
@@ -109,8 +109,11 @@ OutfitAI/
 │       └── res/
 │           ├── layout/                              # 所有布局文件
 │           ├── menu/bottom_nav_menu.xml             # 底部导航菜单
+│           ├── drawable-nodpi/                       # 应用图标源图等固定尺寸资源
 │           ├── values/                              # 颜色/字符串/主题
 │           └── xml/file_paths.xml                   # FileProvider 配置
+├── docs/
+│   └── privacy-policy.md                    # 隐私政策
 ├── build.gradle                             # 项目级构建配置
 ├── settings.gradle                          # 项目设置
 └── gradle.properties                        # Gradle 属性
@@ -203,6 +206,7 @@ cd OutfitAI
 | v1.2.0 | 2026-06 | 穿搭历史（保存/缩略图/历史详情/删除确认），场景风格 4 组 22 种分类，Markdown 表格渲染，各页面标题卡片，底部导航栏滚动适配 |
 | v1.2.1 | 2026-06 | 场景建议效果图生成（CogView-3-Flash），效果图保存到穿搭历史，缩略图居中，详情图片完整显示 |
 | v1.2.2 | 2026-06 | 效果图预生成本地缩略图，历史详情图片完整显示（fitCenter 修复） |
+| v1.2.3 | 2026-06 | 优化应用图标资源尺寸，新增应用图标源图，补充隐私政策文档，并将本地 iOS 工程加入 Git 忽略列表 |
 
 ---
 

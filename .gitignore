@@ -13,3 +13,6 @@ local.properties
 
 app/build/
 app/release/
+
+# Local iOS workspace is kept out of this Android repository.
+ios/
